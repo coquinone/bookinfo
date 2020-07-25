@@ -13,44 +13,34 @@
 #   limitations under the License.
 
 ##################################################################################################
-# Reviews service v2
+# Details service v2
 ##################################################################################################
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: reviews-v2
+  name: details-v2
   labels:
-    app: reviews
+    app: details
     version: v2
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: reviews
+      app: details
       version: v2
   template:
     metadata:
       labels:
-        app: reviews
+        app: details
         version: v2
     spec:
       containers:
-      - name: reviews
-        image: coquinone/examples-bookinfo-reviews-v2:1.0
+      - name: details
+        image: docker.io/istio/examples-bookinfo-details-v2:1.16.2
         imagePullPolicy: IfNotPresent
-        env:
-        - name: LOG_DIR
-          value: "/tmp/logs"
         ports:
         - containerPort: 9080
-        volumeMounts:
-        - name: tmp
-          mountPath: /tmp
-        - name: wlp-output
-          mountPath: /opt/ibm/wlp/output
-      volumes:
-      - name: wlp-output
-        emptyDir: {}
-      - name: tmp
-        emptyDir: {}
+        env:
+        - name: DO_NOT_ENCRYPT
+          value: "true"
 ---

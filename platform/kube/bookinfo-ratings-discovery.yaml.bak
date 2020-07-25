@@ -13,44 +13,18 @@
 #   limitations under the License.
 
 ##################################################################################################
-# Reviews service v2
+# Ratings service
 ##################################################################################################
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: reviews-v2
+  name: ratings
   labels:
-    app: reviews
-    version: v2
+    app: ratings
 spec:
-  replicas: 1
+  ports:
+  - port: 9080
+    name: http
   selector:
-    matchLabels:
-      app: reviews
-      version: v2
-  template:
-    metadata:
-      labels:
-        app: reviews
-        version: v2
-    spec:
-      containers:
-      - name: reviews
-        image: coquinone/examples-bookinfo-reviews-v2:1.0
-        imagePullPolicy: IfNotPresent
-        env:
-        - name: LOG_DIR
-          value: "/tmp/logs"
-        ports:
-        - containerPort: 9080
-        volumeMounts:
-        - name: tmp
-          mountPath: /tmp
-        - name: wlp-output
-          mountPath: /opt/ibm/wlp/output
-      volumes:
-      - name: wlp-output
-        emptyDir: {}
-      - name: tmp
-        emptyDir: {}
+    app: ratings
 ---

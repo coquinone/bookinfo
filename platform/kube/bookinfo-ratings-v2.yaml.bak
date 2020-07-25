@@ -12,45 +12,52 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-ratings-v2
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ratings-v2-mysql
+  name: ratings-v2
   labels:
     app: ratings
-    version: v2-mysql
+    version: v2
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: ratings
-      version: v2-mysql
+      version: v2
   template:
     metadata:
       labels:
         app: ratings
-        version: v2-mysql
+        version: v2
     spec:
+      serviceAccountName: bookinfo-ratings-v2
       containers:
       - name: ratings
-        image: coquinone/examples-bookinfo-ratings-v2:1.0
+        image: docker.io/istio/examples-bookinfo-ratings-v2:1.16.2
         imagePullPolicy: IfNotPresent
         env:
           # ratings-v2 will use mongodb as the default db backend.
-          # if you would like to use mysqldb then you can use this file
-          # which sets DB_TYPE = 'mysql' and the rest of the parameters shown
-          # here and also create the # mysqldb service using bookinfo-mysql.yaml
-          # NOTE: This file is mutually exclusive to bookinfo-ratings-v2.yaml
-          - name: DB_TYPE
-            value: "mysql"
-          - name: MYSQL_DB_HOST
-            value: mysqldb
-          - name: MYSQL_DB_PORT
-            value: "3306"
-          - name: MYSQL_DB_USER
-            value: root
-          - name: MYSQL_DB_PASSWORD
-            value: password
+          # if you would like to use mysqldb then set DB_TYPE = 'mysql', set
+          # the rest of the parameters shown here and also create the
+          # mysqldb service using bookinfo-mysql.yaml
+          # - name: DB_TYPE #default to
+          #   value: "mysql"
+          # - name: MYSQL_DB_HOST
+          #   value: mysqldb
+          # - name: MYSQL_DB_PORT
+          #   value: "3306"
+          # - name: MYSQL_DB_USER
+          #   value: root
+          # - name: MYSQL_DB_PASSWORD
+          #  value: password
+          - name: MONGO_DB_URL
+            value: mongodb://mongodb:27017/test
         ports:
         - containerPort: 9080
 ---

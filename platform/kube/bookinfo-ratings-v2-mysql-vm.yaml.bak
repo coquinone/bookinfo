@@ -15,36 +15,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ratings-v2-mysql
+  name: ratings-v2-mysql-vm
   labels:
     app: ratings
-    version: v2-mysql
+    version: v2-mysql-vm
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: ratings
-      version: v2-mysql
+      version: v2-mysql-vm
   template:
     metadata:
       labels:
         app: ratings
-        version: v2-mysql
+        version: v2-mysql-vm
     spec:
       containers:
       - name: ratings
-        image: coquinone/examples-bookinfo-ratings-v2:1.0
+        image: docker.io/istio/examples-bookinfo-ratings-v2:1.16.2
         imagePullPolicy: IfNotPresent
         env:
-          # ratings-v2 will use mongodb as the default db backend.
-          # if you would like to use mysqldb then you can use this file
-          # which sets DB_TYPE = 'mysql' and the rest of the parameters shown
-          # here and also create the # mysqldb service using bookinfo-mysql.yaml
-          # NOTE: This file is mutually exclusive to bookinfo-ratings-v2.yaml
+          # This assumes you registered your mysql vm as
+          # istioctl register -n vm mysqldb 1.2.3.4 3306
           - name: DB_TYPE
             value: "mysql"
           - name: MYSQL_DB_HOST
-            value: mysqldb
+            value: mysqldb.vm.svc.cluster.local
           - name: MYSQL_DB_PORT
             value: "3306"
           - name: MYSQL_DB_USER

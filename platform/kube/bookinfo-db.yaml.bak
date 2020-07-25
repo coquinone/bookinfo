@@ -12,45 +12,48 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-##################################################################################################
-# Reviews service v2
-##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  labels:
+    app: mongodb
+spec:
+  ports:
+  - port: 27017
+    name: mongo
+  selector:
+    app: mongodb
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: reviews-v2
+  name: mongodb-v1
   labels:
-    app: reviews
-    version: v2
+    app: mongodb
+    version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: reviews
-      version: v2
+      app: mongodb
+      version: v1
   template:
     metadata:
       labels:
-        app: reviews
-        version: v2
+        app: mongodb
+        version: v1
     spec:
       containers:
-      - name: reviews
-        image: coquinone/examples-bookinfo-reviews-v2:1.0
+      - name: mongodb 
+        image: docker.io/istio/examples-bookinfo-mongodb:1.16.2
         imagePullPolicy: IfNotPresent
-        env:
-        - name: LOG_DIR
-          value: "/tmp/logs"
         ports:
-        - containerPort: 9080
+        - containerPort: 27017
         volumeMounts:
-        - name: tmp
-          mountPath: /tmp
-        - name: wlp-output
-          mountPath: /opt/ibm/wlp/output
+        - name: data-db
+          mountPath: /data/db
       volumes:
-      - name: wlp-output
-        emptyDir: {}
-      - name: tmp
+      - name: data-db
         emptyDir: {}
 ---
