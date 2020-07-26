@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       - name: reviews
-        image: coquinone/examples-bookinfo-reviews-v2:1.0
+        image: coquinone/examples-bookinfo-reviews-v2:v1
         imagePullPolicy: IfNotPresent
         env:
         - name: LOG_DIR
