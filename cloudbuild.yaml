@@ -3,7 +3,6 @@ steps:
   entrypoint: '/bin/sh'
   args: 
   - '-e'
-  - 'pipefail'
   - '-c'
   - |-
     pwd
