@@ -7,4 +7,4 @@ steps:
   - |-
     apk add bash
     docker login --username=coquinone --password=$_PASS
-    ./build_push_update_images.sh v1 --prefix=coquinone
+    ./build_push_update_images.sh prod --prefix=coquinone
