@@ -1,4 +1,9 @@
 steps:
 - name: 'docker'
   entrypoint: '/bin/sh'
-  args: ['./build_push_update_images.sh', 'v1', '--prefix=coquinone']
+  args: 
+  - '-c'
+  - 'pwd'
+  - 'ls -al'
+  - 'ls -al ./src'
+  - './build_push_update_images.sh', 'v1', '--prefix=coquinone'
