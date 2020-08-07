@@ -5,4 +5,5 @@ steps:
   - '-e'
   - '-c'
   - |-
+    apk add bash
     ./build_push_update_images.sh v1 --prefix=coquinone
