@@ -2,7 +2,7 @@ steps:
 - name: 'docker'
   entrypoint: '/bin/sh'
   args: 
-  - '-eEuo'
+  - '-e'
   - 'pipefail'
   - '-c'
   - |-
