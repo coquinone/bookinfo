@@ -62,7 +62,7 @@ done
 #get all the new image names and tags
 for v in ${VERSION} "latest"
 do
-  IMAGES+=$(docker images -f reference="${PREFIX}/examples-bookinfo*:$v" --format "{{.Repository}}:$v")
+  IMAGES+=$(docker images -f reference="${PREFIX}/examples-bookinfo-productpage-v1:$v" --format "{{.Repository}}:$v")
   IMAGES+=" "
 done
 
@@ -116,5 +116,5 @@ do
 done
 
 #Update image references in the yaml files
-find . -name "*bookinfo*.yaml" -exec sed -i.bak "s/image:.*\\(\\/examples-bookinfo-.*\\):.*/image: ${PREFIX//\//\\\/}\\1:$VERSION/g" {} +
+#find . -name "*bookinfo*.yaml" -exec sed -i.bak "s/image:.*\\(\\/examples-bookinfo-.*\\):.*/image: ${PREFIX//\//\\\/}\\1:$VERSION/g" {} +
 
