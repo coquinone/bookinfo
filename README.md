@@ -35,3 +35,4 @@ Bookinfo is tested by istio.io integration tests. You can find them under [tests
 The reference productpage HTML files are in [tests/apps/bookinfo/output](https://github.com/istio/istio/tree/master/tests/apps/bookinfo/output). If the productpage HTML produced by the app is changed, remember to regenerate the reference HTML files and commit them with the same PR.
 2020-08-12 20:32:46
 2020-08-13 01:03:43
+2020-08-14 19:28:26
